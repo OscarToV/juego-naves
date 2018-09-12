@@ -3,7 +3,7 @@ from pygame.locals import *
 from random import randint
 from clases import Nave
 from clases import Invasor as Enemigo
-#variables globales
+
 ancho  = 900
 alto      = 480
 listaEnemigo = []
@@ -53,6 +53,7 @@ def SpaceInvader( ):
 	miFuenteSistema = pygame.font.SysFont("Arial",30)
 	Texto = miFuenteSistema.render("Fin del Juego",0,(120,100,40))
 	TextoGanador = miFuenteSistema.render("Ganaste  ",0,(200,0,200))
+	TextoPausa = miFuenteSistema.render("Pausa ", 0,(200,0,200))
 
 	jugador = Nave.naveEspacial(ancho, alto)
 	c =cargarEnemigos( )
@@ -80,6 +81,18 @@ def SpaceInvader( ):
 					elif evento.key == K_s:
 						x,y = jugador.rect.center
 						jugador.disparar(x,y)
+
+					elif evento.key == K_p:
+						ventana.blit(TextoPausa,(200,300))
+						pygame.display.flip()
+						while True:
+							evento = pygame.event.wait()
+							pygame.mixer.music.pause()
+							if evento.type == KEYDOWN:
+								if evento.key == K_p:
+									pygame.mixer.music.unpause()
+									break
+
 
 
 		ventana.blit(fondo, (0,0))
